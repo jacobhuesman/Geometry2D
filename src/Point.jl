@@ -14,7 +14,7 @@ struct Point{T<:Real}
 
     function Point{T}(A::Array{T}) where {T<:Real}
         if size(A, 1) != 1 || size(A, 2) != 2
-            error("Points have the form [x, y]")
+            error("Points have the form [x y]")
         else
             new(A)
         end
@@ -25,6 +25,10 @@ Point(A::Array{T}) where {T<:Real} = Point{T}(A)
 Point(x::T, y::T) where {T<:Real} = Point{T}([x y])
 
 Base.:+(a::Point, b::Point) = Point(a.A + b.A)
+Base.:+(a::Array, b::Point) = Point(a   + b.A)
+Base.:+(a::Point, b::Array) = Point(a.A + b)
 Base.:-(a::Point, b::Point) = Point(a.A - b.A)
+Base.:-(a::Array, b::Point) = Point(a   - b.A)
+Base.:-(a::Point, b::Array) = Point(a.A - b)
 
 Base.show(io::IO, a::Point) = print(io, a.A, " (Point)")
