@@ -31,4 +31,7 @@ Base.:-(a::Point, b::Point) = Point(a.A - b.A)
 Base.:-(a::Array, b::Point) = Point(a   - b.A)
 Base.:-(a::Point, b::Array) = Point(a.A - b)
 
+Base.getindex(a::Point, i) = a.A[i]
+Array(a::Point) = a.A
+
 Base.show(io::IO, a::Point) = print(io, a.A, " (Point)")
