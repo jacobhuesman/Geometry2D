@@ -10,3 +10,6 @@ The toolbox is a work in progress.
 Linux: [![Build Status](https://travis-ci.org/jacobhuesman/Geometry2D.jl.svg?branch=master)](https://travis-ci.org/jacobhuesman/Geometry2D.jl)
 
 Windows: [![Build Status](https://ci.appveyor.com/api/projects/status/github/jacobhuesman/Geometry2D?branch=master&svg=true)](https://ci.appveyor.com/project/jacobhuesman/Geometry2D/branch/master)
+
+Coveralls: [![Coverage Status](https://coveralls.io/repos/jacobhuesman/Geometry2D.jl/badge.svg?branch=master)](https://coveralls.io/r/jacobhuesman/Geometry2D.jl?branch=master)
+
