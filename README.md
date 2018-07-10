@@ -33,5 +33,5 @@ The toolbox is a work in progress.
 # Build Status
 [![Build Status](https://travis-ci.org/jacobhuesman/Geometry2D.jl.svg?branch=master)](https://travis-ci.org/jacobhuesman/Geometry2D.jl)
 [![Build Status](https://ci.appveyor.com/api/projects/status/github/jacobhuesman/Geometry2D.jl?branch=master&svg=true)](https://ci.appveyor.com/project/jacobhuesman/Geometry2D.jl/branch/master)
-[![Coverage Status](https://coveralls.io/repos/jacobhuesman/Geometry2D.jl/badge.svg?branch=master)](https://coveralls.io/r/jacobhuesman/Geometry2D.jl?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/jacobhuesman/Geometry2D.jl/badge.svg?branch=master)](https://coveralls.io/github/jacobhuesman/Geometry2D.jl?branch=master)
 [![codecov](https://codecov.io/gh/jacobhuesman/Geometry2D.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/jacobhuesman/Geometry2D.jl)
