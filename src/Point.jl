@@ -20,6 +20,11 @@ struct Point{T<:Real}
         end
     end
 end
+
 Point(A::Array{T}) where {T<:Real} = Point{T}(A)
 Point(x::T, y::T) where {T<:Real} = Point{T}([x y])
-Point(x::Real, y::Real) = Point(promote(x, y)...)
+
+Base.:+(a::Point, b::Point) = Point(a.A + b.A)
+Base.:-(a::Point, b::Point) = Point(a.A - b.A)
+
+Base.show(io::IO, a::Point) = print(io, a.A, " (Point)")
