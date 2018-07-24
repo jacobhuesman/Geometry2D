@@ -20,8 +20,8 @@ Line(data::Array{T,1}) where {T<:AbstractFloat} = Line{T}(data)
 Line(data1::Array{T,1}, data2::Array{T}) where {T<:AbstractFloat} = Line{T}(vcat(data1, data2))
 Line(x::T, y::T, dx::T, dy::T) where {T<:AbstractFloat} = Line{T}([x, y, dx, dy])
 Line(p1::Point, p2::Point) = Line(vcat(p1.data, p2.data))
-Line(θ::T) where {T<:AbstractFloat} = Line([0 0 cos(θ) sin(θ)])
-Line(p::Point, θ::T) where {T<:AbstractFloat} = Line([p.data [cos(θ) sin(θ)] + p.data])
+Line(θ::T) where {T<:AbstractFloat} = Line([0, 0, cos(θ), sin(θ)])
+Line(p::Point, θ::T) where {T<:AbstractFloat} = Line([p.data, [cos(θ), sin(θ)] + p.data])
 
 convert(::Type{Line}, P::Array) = Line(P)
 

@@ -1,5 +1,6 @@
 # TODO add convert method
 # TODO switch to SVector
+# TODO switch to one dimensional array
 include("Geometry.jl")
 
 struct Point{T} <: Geometry{T}
