@@ -3,19 +3,13 @@
 # TODO switch to one dimensional array
 include("Geometry.jl")
 
-struct Point{T} <: Geometry{T}
-    data::Array{T,2}
+using StaticArrays
 
-    function Point{T}(data::Array{T}) where {T<:Real}
-        if size(data, 1) != 1 || size(data, 2) != 2
-            error("Points have the form [x y]")
-        else
-            new(data)
-        end
-    end
+struct Point <: Geometry
+    data::SVector{3,Float64}
 end
 
-Point(data::Array{T}) where {T<:Real} = Point{T}(data)
-Point(x::T, y::T) where {T<:Real} = Point{T}([x y])
+Point(x::T, y::T) where {T<:Real} = Point(SVector{3,Float64}(x, y))
+Point(data::Array{Float64,1}) = Point(data[1], data[2], data[3])
 
 Base.show(io::IO, a::Point) = print(io, "Point:\n", a.data)

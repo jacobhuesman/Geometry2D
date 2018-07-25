@@ -1,32 +1,27 @@
 # Starting with the definition found in the Octave Geometry package
 # I think there is a better representation though
+#---
+using StaticArrays
 
 include("Geometry.jl")
 
-struct Circle{T} <: Geometry{T}
-    data::Array{T,1}
-
-    function Circle{T}(data::Array{T}) where {T<:AbstractFloat}
-        if size(data, 1) != 3
-            error("Circles have the form [x, y, r]")
-        else
-            new(data)
-        end
-    end
+struct Circle <: Geometry
+    data::SVector{3,Float64}
 end
 
-Circle(data::Array{T,1}) where {T<:AbstractFloat} = Circle{T}(data)
-Circle(x::T, y::T, r::T) where {T<:AbstractFloat} = Circle{T}([x, y, r])
-Circle(p::Point{T}, r::T) where {T<:AbstractFloat} = Circle{T}(vcat(p.data, r))
-
-Base.show(io::IO, a::Point) = print(io, "Circle:\n", a.data)
+Circle(x, y, r) = Circle(SVector{3,Float64}(x, y, r))
+Circle(P::SVector{2,Float64}, r::T) where {T<:Real}= Circle(P, r)
+Circle(data::Array) = Circle(data[1], data[2], data[3])
+#Circle(p::Point{T}, r::T) where {T<:AbstractFloat} = Circle{T}(vcat(p.data, r))
+Base.show(io::IO, a::Circle) = print(io, "Circle:\n", a.data)
+#---
 
 function draw(image::Array{UInt8,2}, circle::Circle; enable_warnings=false)
-	P::Array{Float64} = circle.data[1:2];
-	r::Float64 = circle.data[3];
+	P = SVector{2,Float64}(circle[1], circle[2]);
+	r::Float64 = circle[3];
 
-	i = (0:1/(r*pi):2*pi)' # TODO figure out what this actually should be
-	X = round.(Int, r.*[cos.(i); sin.(i)] .+ P);
+	i = (0:1/(pi*r):2*pi)' # TODO figure out what this actually should be
+	X = round.(Int, r.*[cos.(i); sin.(i)] .+ P); # TODO try rotating a vector instead of calculating sine and cosine constantly
 
 	image_size = collect(size(image));
 	for i = 1:size(X,2)
@@ -43,13 +38,15 @@ end
 
 function draw(image::Array{UInt8,2}, circle::Circle, fill::Bool; enable_warnings=false)
 	if (fill)
-		P = round.(Int, circle[1:2]);
 		for i = 1:round(circle.data[3])
-			image = draw(image, Circle(vcat(P, i)))
-			image[P[1], P[2]] = 255;
+			image = draw(image, Circle(circle[1], circle[2], i))
 		end
+		image[round(Int, circle[1]), round(Int, circle[2])] = 255;
 	else
 		image = draw(image, circle);
 	end
 	return image;
 end
+
+# Original runtime: ~0.024748 seconds
+# Runtime after moving image[P[1], P[2]] outside of loop: 0.023427
