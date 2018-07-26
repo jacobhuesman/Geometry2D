@@ -8,10 +8,10 @@ struct Line <: Geometry
     data::SVector{4,Float64}
 end
 
-Line(x1,y1,x2,y2) = Line(SVector{4,Float64}(x1,y1,x2,y2))
+Line(x1,y1,x2,y2) = Line(SVector{4,Float64}(x1, y1, x2, y2))
 Line(P1::SVector{2,Float64}, P2::SVector{2,Float64}) = Line(P1[1], P1[2], P2[1], P2[2])
 Line(data::Array) = Line(data[1], data[2], data[3], data[4])
-Line(data1::Array{T,1}, data2::Array{T}) where {T<:AbstractFloat} = Line(vcat(data1, data2))
+Line(data1::Array, data2::Array) = Line(data1[1], data1[2], data2[1], data2[2])
 
 convert(::Type{Line}, P::Array) = Line(P)
 
@@ -24,7 +24,6 @@ function draw(image::Array{UInt8,2}, line::Line)
 
 	d::SVector{2,Float64} = Y - X;
 	length::Float64 = maximum(abs.(d));
-
 	d = d ./ length;
 	image_size = collect(size(image));
 
