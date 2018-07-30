@@ -15,6 +15,7 @@ Circle(data::Array) = Circle(data[1], data[2], data[3])
 
 Base.show(io::IO, a::Circle) = print(io, "Circle: O = ", a.data, ", r = ", a.r)
 
+# TODO add boundary condition checks
 function draw(image::Array{T,2}, circle::Circle; value=0, fill::Bool=true) where {T<:Real}
 	P = circle.data;
 	r::Float64 = round.(circle.r);

@@ -15,7 +15,7 @@ Point(data::Array{Float64,1}) = Point(data[1], data[2])
 Base.show(io::IO, a::Point) = print(io, "Point:\n", a.data)
 
 @enum PointType dot=1 cross=2
-function draw(image::Array{T,2}, point::Point; value::Int=100, pointtype::PointType=cross, size::Float64=4.0) where {T<:Real}
+function draw(image::Array{T,2}, point::Point; value::Int=0, pointtype::PointType=cross, size::Float64=4.0) where {T<:Real}
 	if (pointtype == dot)
 		return draw(image, Circle(point.data, size), value, true);
 	else
