@@ -1,5 +1,6 @@
 # TODO add convert method
 # TODO switch to SVector
+
 include("Geometry.jl")
 include("Point.jl")
 import Base.convert, StaticArrays
@@ -17,8 +18,8 @@ convert(::Type{Line}, P::Array) = Line(P)
 
 Base.show(io::IO, a::Line) = print(io, "Line:\n", a.data)
 
-# Draw a line on an image
-function draw(image::Array{UInt8,2}, line::Line)
+# TODO combine line implementations
+function draw(image::Array{T,2}, line::Line; value=0) where {T<:Real}
 	X = SVector{2,Float64}(line[1], line[2]);
 	Y = SVector{2,Float64}(line[3], line[4]);
 
@@ -30,13 +31,12 @@ function draw(image::Array{UInt8,2}, line::Line)
 	for i = 0:length
 		P = round.(Int, X + d*i);
 		if (!(minimum(P) < 1) && !(minimum(image_size - P) < 0))
-			image[P[1], P[2]] = 255;
+			image[P[1], P[2]] = value;
 		end
 	end
-	return image;
 end
 
-function draw(image::Array{UInt8,2}, line::Line, width::Real)
+function draw(image::Array{T,2}, line::Line, width::Real; value=0) where {T<:Real}
 	X::SVector{2,Float64} = line[1:2];
 	Y::SVector{2,Float64} = line[3:4];
 	d::SVector{2,Float64} = Y - X;
@@ -46,9 +46,8 @@ function draw(image::Array{UInt8,2}, line::Line, width::Real)
 	for i = -width/2.0:width/2.0
 		shift = line + Line(i*r, i*r);
 		for j = -1.0:1.0
-			draw(image, shift + Line(j, 0.0, j, 0.0))
-			draw(image, shift + Line(0.0, j, 0.0, j))
+			draw(image, shift + Line(j, 0.0, j, 0.0), value=value)
+			draw(image, shift + Line(0.0, j, 0.0, j), value=value)
 		end
 	end
-	return image;
 end

@@ -1,5 +1,6 @@
 abstract type Geometry end
 
+import Base.getindex
 #Geometry(data::Array{T}) where {T<:Real} = Geometry{T}(data)
 
 Base.:+(a::T,     b::T)     where {T<:Geometry} = T(a.data + b.data)
@@ -9,7 +10,9 @@ Base.:-(a::T,     b::T)     where {T<:Geometry} = T(a.data - b.data)
 Base.:-(a::Array, b::T)     where {T<:Geometry} = T(a      - b.data)
 Base.:-(a::T,     b::Array) where {T<:Geometry} = T(a.data - b)
 
-Base.getindex(a::Geometry, i) = a.data[i]
+function getindex(a::Geometry, i...)
+	getindex(a.data, i...)
+end
 #function Base.setindex!(a::Geometry{T}, d::T, i::Int) where {T<:AbstractFloat}
 #    a.data[i] = d;
 #    return a;

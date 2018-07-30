@@ -1,6 +1,5 @@
-# Starting with the definition found in the Octave Geometry package
-# I think there is a better representation though
-#---
+# TODO figure out best representation
+
 using StaticArrays
 
 include("Geometry.jl")
@@ -13,11 +12,34 @@ end
 Circle(x, y, r::T) where {T<:Real} = Circle(SVector{2,Float64}(x, y), Float64(r))
 Circle(P::SVector{2,Float64}, r::T) where {T<:Real}= Circle(P, Float64(r))
 Circle(data::Array) = Circle(data[1], data[2], data[3])
-#Circle(p::Point{T}, r::T) where {T<:AbstractFloat} = Circle{T}(vcat(p.data, r))
-Base.show(io::IO, a::Circle) = print(io, "Circle: O = ", a.data, ", r = ", a.r)
-#---
 
-function draw(image::Array{UInt8,2}, circle::Circle)
+Base.show(io::IO, a::Circle) = print(io, "Circle: O = ", a.data, ", r = ", a.r)
+
+function draw(image::Array{T,2}, circle::Circle; value=0, fill::Bool=true) where {T<:Real}
+	P = circle.data;
+	r::Float64 = round.(circle.r);
+	Xf = -r:r;
+	Y1::Array{Int,1} = round.(Int, sqrt.(r^2 .- Xf.^2) .+ P[2]);
+	Y2::Array{Int,1} = -Y1 .+ round.(Int, 2*P[2]);
+	X::Array{Int,1} = round.(Int, Xf + P[1]);
+
+	image_size = collect(size(image));
+
+	if (fill)
+		for i = 1:size(X,1)
+			image[X[i], Y2[i]:Y1[i]] = value;
+		end
+	else
+		for i = 1:size(X,1)
+			image[X[i], Y1[i]] = value; # Need a better non-fill implementation
+			image[X[i], Y2[i]] = value;
+		end
+	end
+end
+
+#=
+
+function draw(image::Array{UInt8,2}, circle::Circle, value)
 	P = circle.data;
 	r::Float64 = circle.r;
 
@@ -33,30 +55,6 @@ function draw(image::Array{UInt8,2}, circle::Circle)
 	return image;
 end
 
-function draw(image::Array{UInt8,2}, circle::Circle, fill::Bool)
-	P = circle.data;
-	r::Float64 = round.(circle.r);
-	Xf = -r:r;
-	Y1::Array{Int,1} = round.(Int, sqrt.(r^2 .- Xf.^2) .+ P[2]);
-	Y2::Array{Int,1} = -Y1 .+ round.(Int, 2*P[2]);
-	X::Array{Int,1} = round.(Int, Xf + P[1]);
-
-	image_size = collect(size(image));
-
-	if (fill)
-		for i = 1:size(X,1)
-			image[X[i], Y2[i]:Y1[i]] = 255;
-		end
-	else
-		for i = 1:size(X,1)
-			image[X[i], Y1[i]] = 255; # Need a better non-fill implementation
-			image[X[i], Y2[i]] = 255;
-		end
-	end
-	return image;
-end
-
-#=
 function draw(image::Array{UInt8,2}, circle::Circle, fill::Bool)
 	if (fill)
 		for i = 1:round(circle.r)
