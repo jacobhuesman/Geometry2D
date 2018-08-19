@@ -26,10 +26,14 @@ function draw(image::Array{T,2}, line::Line; value=0) where {T<:Union{Real,Color
 
 	d::SVector{2,Float64} = Y - X;
 	length::Float64 = maximum(abs.(d));
+	if (length <= 0)
+		return
+	end
 	d = d ./ length;
 	image_size = collect(size(image));
 
 	for i = 0:length
+		#info("i: ", i, " X: ", X, " d: ", d, " F: ", X + d*i)
 		P = round.(Int, X + d*i);
 		if (!(minimum(P) < 1) && !(minimum(image_size - P) < 0))
 			image[P[1], P[2]] = value;
