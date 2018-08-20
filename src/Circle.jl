@@ -22,13 +22,15 @@ function draw(image::Array{T,2}, circle::Circle; value=0, fill::Bool=true) where
 	Xf = -r:r;
 	Y1::Array{Int,1} = round.(Int, sqrt.(r^2 .- Xf.^2) .+ P[2]);
 	Y2::Array{Int,1} = -Y1 .+ round.(Int, 2*P[2]);
-	X::Array{Int,1} = round.(Int, Xf + P[1]);
+	X::Array{Int,1} = round.(Int, Xf .+ P[1]);
 
 	image_size = collect(size(image));
 
 	if (fill)
 		for i = 1:size(X,1)
-			image[X[i], Y2[i]:Y1[i]] = value;
+			for j = Y2[i]:Y1[i]
+				image[X[i], j] = value;
+			end
 		end
 	else
 		for i = 1:size(X,1)
