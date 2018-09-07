@@ -16,7 +16,7 @@ Circle(data::Array) = Circle(data[1], data[2], data[3])
 Base.show(io::IO, a::Circle) = print(io, "Circle: O = ", a.data, ", r = ", a.r)
 
 # TODO add boundary condition checks
-function draw(image::Array{T,2}, circle::Circle; value=0, fill::Bool=true) where {T<:Union{Real,Color}}
+function draw!(image::Array{T,2}, circle::Circle; value=0, fill::Bool=true) where {T<:Union{Real,Color}}
 	P = circle.data;
 	r::Float64 = round.(circle.r);
 	Xf = -r:r;
@@ -42,7 +42,7 @@ end
 
 #=
 
-function draw(image::Array{UInt8,2}, circle::Circle, value)
+function draw!(image::Array{UInt8,2}, circle::Circle, value)
 	P = circle.data;
 	r::Float64 = circle.r;
 
@@ -58,14 +58,14 @@ function draw(image::Array{UInt8,2}, circle::Circle, value)
 	return image;
 end
 
-function draw(image::Array{UInt8,2}, circle::Circle, fill::Bool)
+function draw!(image::Array{UInt8,2}, circle::Circle, fill::Bool)
 	if (fill)
 		for i = 1:round(circle.r)
-			image = draw(image, Circle(circle.data, i))
+			image = draw!(image, Circle(circle.data, i))
 		end
 		image[round(Int, circle[1]), round(Int, circle[2])] = 255;
 	else
-		image = draw(image, circle);
+		image = draw!(image, circle);
 	end
 	return image;
 end

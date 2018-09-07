@@ -20,7 +20,7 @@ convert(::Type{Line}, P::Array) = Line(P)
 Base.show(io::IO, a::Line) = print(io, "Line:\n", a.data)
 
 # TODO combine line implementations
-function draw(image::Array{T,2}, line::Line; value=0) where {T<:Union{Real,Color}}
+function draw!(image::Array{T,2}, line::Line; value=0) where {T<:Union{Real,Color}}
 	X = SVector{2,Float64}(line[1], line[2]);
 	Y = SVector{2,Float64}(line[3], line[4]);
 
@@ -41,7 +41,7 @@ function draw(image::Array{T,2}, line::Line; value=0) where {T<:Union{Real,Color
 	end
 end
 
-function draw(image::Array{T,2}, line::Line, width::Real; value=0) where {T<:Union{Real,Color}}
+function draw!(image::Array{T,2}, line::Line, width::Real; value=0) where {T<:Union{Real,Color}}
 	X::SVector{2,Float64} = line[1:2];
 	Y::SVector{2,Float64} = line[3:4];
 	d::SVector{2,Float64} = Y - X;
@@ -51,8 +51,8 @@ function draw(image::Array{T,2}, line::Line, width::Real; value=0) where {T<:Uni
 	for i = -width/2.0:width/2.0
 		shift = line + Line(i*r, i*r);
 		for j = -1.0:1.0
-			draw(image, shift + Line(j, 0.0, j, 0.0), value=value)
-			draw(image, shift + Line(0.0, j, 0.0, j), value=value)
+			draw!(image, shift + Line(j, 0.0, j, 0.0), value=value)
+			draw!(image, shift + Line(0.0, j, 0.0, j), value=value)
 		end
 	end
 end

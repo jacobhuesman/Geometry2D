@@ -5,7 +5,7 @@ module Geometry2D
     include("Point.jl")
     include("Line.jl")
     include("Circle.jl")
-    export Point, Line, Circle, draw
+    export Point, Line, Circle, draw!
 
 
 end # module
