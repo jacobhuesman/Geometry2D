@@ -1,9 +1,5 @@
 # TODO figure out best representation
 
-using StaticArrays
-
-include("Geometry.jl")
-
 struct Circle <: Geometry
     data::SVector{2,Float64}
 	r::Float64

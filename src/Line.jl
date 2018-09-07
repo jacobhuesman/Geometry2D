@@ -1,10 +1,6 @@
 # TODO add convert method
 # TODO switch to SVector
 
-include("Geometry.jl")
-include("Point.jl")
-import Base.convert, StaticArrays
-
 struct Line <: Geometry
     data::SVector{4,Float64}
 end

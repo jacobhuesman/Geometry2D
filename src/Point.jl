@@ -1,10 +1,5 @@
 # TODO add convert method
-# TODO switch to SVector
 # TODO switch to one dimensional array
-include("Geometry.jl")
-using Colors
-
-using StaticArrays
 
 struct Point <: Geometry
     data::SVector{2,Float64}

@@ -1,11 +1,18 @@
 module Geometry2D
 
-# package code goes here
-    #using
+    using StaticArrays
+    using Colors
+
+    import Base: getindex, convert
+
+    include("Geometry.jl")
     include("Point.jl")
     include("Line.jl")
     include("Circle.jl")
-    export Point, Line, Circle, draw!
 
+    export Point,
+           Line,
+           Circle,
+           draw!
 
 end # module

@@ -1,6 +1,5 @@
 abstract type Geometry end
 
-import Base.getindex
 #Geometry(data::Array{T}) where {T<:Real} = Geometry{T}(data)
 
 Base.:+(a::T,       b::T)     where {T<:Geometry} = T(a.data + b.data)
