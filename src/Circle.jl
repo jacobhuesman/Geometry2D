@@ -8,6 +8,7 @@ end
 Circle(x, y, r::T) where {T<:Real} = Circle(SVector{2,Float64}(x, y), Float64(r))
 Circle(P::SVector{2,Float64}, r::T) where {T<:Real}= Circle(P, Float64(r))
 Circle(data::Array) = Circle(data[1], data[2], data[3])
+precompile(Circle, (Float64, Float64, Float64))
 
 Base.show(io::IO, a::Circle) = print(io, "Circle: O = ", a.data, ", r = ", a.r)
 

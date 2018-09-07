@@ -10,6 +10,7 @@ Line(P1::SVector{2,Float64}, P2::SVector{2,Float64}) = Line(P1[1], P1[2], P2[1],
 Line(p1::Point, p2::Point) = Line(p1[1], p1[2], p2[1], p2[2])
 Line(data::Array) = Line(data[1], data[2], data[3], data[4])
 Line(data1::Array, data2::Array) = Line(data1[1], data1[2], data2[1], data2[2])
+precompile(Line, (Float64, Float64, Float64, Float64))
 
 convert(::Type{Line}, P::Array) = Line(P)
 

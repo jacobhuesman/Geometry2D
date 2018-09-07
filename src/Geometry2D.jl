@@ -1,3 +1,4 @@
+__precompile__()
 module Geometry2D
 
     using StaticArrays
@@ -10,7 +11,9 @@ module Geometry2D
     include("Line.jl")
     include("Circle.jl")
 
-    export Point,
+    export Geometry,
+           Point,
+           PointType,
            Line,
            Circle,
            draw!

@@ -7,6 +7,7 @@ end
 
 Point(x::T, y::T) where {T<:Real} = Point(SVector{2,Float64}(x, y))
 Point(data::Array{Float64,1}) = Point(data[1], data[2])
+precompile(Point, (Float64, Float64))
 
 Base.show(io::IO, a::Point) = print(io, "Point: ", a.data)
 
